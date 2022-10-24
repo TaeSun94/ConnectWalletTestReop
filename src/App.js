@@ -24,6 +24,19 @@ function App() {
     setNetwork(Number(id));
   };
 
+  function deactivateHandler() {
+    deactivate();
+    let isCoinbase = localStorage.getItem('-walletlink:https://www.walletlink.org:Addresses');
+    if(isCoinbase) {
+        localStorage.removeItem('-walletlink:https://www.walletlink.org:Addresses');
+        localStorage.removeItem('-walletlink:https://www.walletlink.org:session:id');
+        localStorage.removeItem('-walletlink:https://www.walletlink.org:session:secret');
+        localStorage.removeItem('-walletlink:https://www.walletlink.org:session:linked');
+        localStorage.removeItem('-walletlink:https://www.walletlink.org:IsStandaloneSigning');
+        window.location.reload();
+    }
+}
+
   const switchNetwork = async () => {
     try {
       await library.provider.request({
@@ -62,7 +75,7 @@ function App() {
         <br />
         ChainId: {chainId}
         <br />
-        <button onClick={deactivate}>disconnect</button>
+        <button onClick={deactivateHandler}>disconnect</button>
         <select onChange={handleNetwork}>
           <option value="1">Mainnet</option>
           <option value="5">Goerli</option>
